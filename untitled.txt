@@ -1,0 +1,95 @@
+import React, { useState } from "react";
+
+function App() {
+  const [principal, setPrincipal] = useState("");
+  const [rate, setRate] = useState("");
+  const [time, setTime] = useState("");
+  const [interest, setInterest] = useState(null);
+
+  const calculateInterest = () => {
+    const P = parseFloat(principal);
+    const R = parseFloat(rate);
+    const T = parseFloat(time);
+
+    if (isNaN(P) || isNaN(R) || isNaN(T)) {
+      setInterest("Please enter valid numbers");
+      return;
+    }
+
+    const SI = (P * R * T) / 100;
+    setInterest(SI.toFixed(2));
+  };
+
+  const style = {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100vh",
+      backgroundColor: "#111",
+      color: "#fff",
+      fontFamily: "Arial",
+      padding: "20px",
+    },
+    input: {
+      padding: "10px",
+      margin: "8px",
+      fontSize: "16px",
+      borderRadius: "5px",
+      border: "none",
+    },
+    button: {
+      padding: "10px 20px",
+      fontSize: "16px",
+      backgroundColor: "#444",
+      color: "#fff",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      marginTop: "10px",
+    },
+    result: {
+      marginTop: "20px",
+      fontSize: "20px",
+    },
+  };
+
+  return (
+    <div style={style.container}>
+      <h1>Simple Interest Calculator</h1>
+      <input
+        type="number"
+        placeholder="Principal Amount"
+        value={principal}
+        onChange={(e) => setPrincipal(e.target.value)}
+        style={style.input}
+      />
+      <input
+        type="number"
+        placeholder="Annual Interest Rate (%)"
+        value={rate}
+        onChange={(e) => setRate(e.target.value)}
+        style={style.input}
+      />
+      <input
+        type="number"
+        placeholder="Time (in years)"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        style={style.input}
+      />
+      <button onClick={calculateInterest} style={style.button}>
+        Calculate Interest
+      </button>
+
+      {interest !== null && (
+        <div style={style.result}>
+          Simple Interest: <strong>₹ {interest}</strong>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
